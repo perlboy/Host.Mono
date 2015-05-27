@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using Integrator.Hub.Models;
 using Newtonsoft.Json;
+using System.Configuration;
 
 namespace Host
 {
@@ -21,6 +22,7 @@ namespace Host
             System.Console.WriteLine("Welcome to the microServiceBus Console Host");
             System.Console.WriteLine();
             
+			// Get Organization info
             if (ConfigurationManager.AppSettings["OrganizationId"] == null)
             {
                 System.Console.Write("Secret>");
@@ -28,11 +30,15 @@ namespace Host
                 UpdateAppSettings("OrganizationId", secret);
                 orgId = Guid.Parse(secret);
             }
+			else
+				orgId = Guid.Parse(ConfigurationManager.AppSettings["OrganizationId"]);
+
 			bool exit = false;
 			Console.Write("Host name>");
 			var hostName = Console.ReadLine();
+			var hubUrl = ConfigurationManager.AppSettings ["hubUrl"];
 
-			_hostService = new HostService(hostName);
+			_hostService = new HostService(hostName,orgId, hubUrl);
 			_hostService.OnLogEvent += _hostService_OnLogEvent;
 			_hostService.Connect();
 			_hostService.SignIn(hostName);
