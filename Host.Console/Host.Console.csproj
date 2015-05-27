@@ -48,5 +48,9 @@
       <Project>{55DD7AE6-5F57-4942-8CE5-5BC899882EC7}</Project>
       <Name>Host.Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Host.Core\Host.Services.Core.csproj">
+      <Project>{3054600A-581D-4F5C-AD02-729E98A2C24A}</Project>
+      <Name>Host.Services.Core</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
